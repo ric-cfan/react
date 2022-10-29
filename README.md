@@ -1,2 +1,2 @@
 # react
-Aulas e exercícios de react
+Aulas e exercícios da matéria react no curso Serratec
