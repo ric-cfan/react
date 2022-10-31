@@ -50,7 +50,7 @@ function Agua() {
         setHistorico(historico + `<h2>🥤 com ${copoMl}ml bebido em: ${dia} - ${hora}</h2>`)
       }
     
-      if((copoMl*(totalCopos+1)) >= metaSent) {
+      if((parseFloat(totalMl)+parseFloat(copoMl)) >= metaSent) {
         setParabens("Parabéns, você cumpriu sua meta diária!")
       }
       else {
