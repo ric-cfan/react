@@ -39,20 +39,26 @@ function Agua() {
   });
 
   const adicionar = () => {
-    setTotalCopos(totalCopos+1)
-    setTotalMl(copoMl*(totalCopos+1))
-    if(historico == `<h2>Nenhum copo registrado</h2>`) {
-      setHistorico(`<h2>🥤 bebido em: ${dia} - ${hora}</h2>`)
+    if(copoMl > 0) {
+      setTotalCopos(totalCopos+1)
+      // setTotalMl(copoMl*(totalCopos+1))
+      setTotalMl(parseFloat(totalMl)+parseFloat(copoMl))
+      if(historico == `<h2>Nenhum copo registrado</h2>`) {
+        setHistorico(`<h2>🥤 com ${copoMl}ml bebido em: ${dia} - ${hora}</h2>`)
+      }
+      else {
+        setHistorico(historico + `<h2>🥤 com ${copoMl}ml bebido em: ${dia} - ${hora}</h2>`)
+      }
+    
+      if((copoMl*(totalCopos+1)) >= metaSent) {
+        setParabens("Parabéns, você cumpriu sua meta diária!")
+      }
+      else {
+        setParabens("")
+      }
     }
     else {
-      setHistorico(historico + `<h2>🥤 bebido em: ${dia} - ${hora}</h2>`)
-    }
-  
-    if((copoMl*(totalCopos+1)) >= metaSent) {
-      setParabens("Parabéns, você cumpriu sua meta diária!")
-    }
-    else {
-      setParabens("")
+      alert('Valor inválido, o copo só pode ter uma quantidade de ml maior que 0')
     }
   }
 
@@ -79,7 +85,12 @@ function Agua() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMetaSent(metaInput);
+    if(metaInput >= 0) {
+      setMetaSent(metaInput);
+    }
+    else {
+      alert('Sua meta de mls precisa ser um número maior ou igual a 0')
+    }
     
   }
 
