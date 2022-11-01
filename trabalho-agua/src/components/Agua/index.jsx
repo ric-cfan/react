@@ -38,6 +38,12 @@ function Agua() {
     }, 1000);
   });
 
+  useEffect(() => {
+      if(htmlHistorico != "") {
+        setHtmlHistorico(`<div id="listaDeHistoricos">${historico}</div>`);
+      }
+  });
+
   const adicionar = () => {
     if(copoMl > 0) {
       setTotalCopos(totalCopos+1)
@@ -78,7 +84,6 @@ function Agua() {
 
   const resetarHistorico = () => {
     setHistorico(`<h2>Histórico de copos</h2><p class="historicoLinha">Nenhum copo registrado`)
-    setHtmlHistorico("")
   }
 
   const ocultarHistorico = () => {
@@ -150,9 +155,9 @@ function Agua() {
       </div>
 
       <div id="botoesHistorico" class="menus">
-        <button class="botao" id="botaoCima" onClick={mostrarHistorico}>Mostrar ou Atualizar histórico</button>
+        <button class="botao" onClick={mostrarHistorico}>Mostrar histórico</button>
         <button class="botao" onClick={ocultarHistorico}>Ocultar histórico</button>
-        <button class="botao" id="botaoBaixo" onClick={resetarHistorico}>Resetar e ocultar histórico</button>
+        <button class="botao" onClick={resetarHistorico}>Resetar histórico</button>
       </div>
       </div>
 
