@@ -8,11 +8,11 @@ function Agua() {
   const [hora, setHora] = useState("")
 
   const [totalCopos, setTotalCopos] = useState(0)
-  const [copoMl, setCopoMl] = useState(0)
+  const [copoMl, setCopoMl] = useState()
   const [totalMl, setTotalMl] = useState(0)
-  const [metaInput, setMetaInput] = useState(0)
+  const [metaInput, setMetaInput] = useState()
   const [metaSent, setMetaSent] = useState(0)
-  const [historico, setHistorico] = useState(`<h2>Nenhum copo registrado</h2>`)
+  const [historico, setHistorico] = useState(`<h2>Histórico de copos</h2><p class="historicoLinha">Nenhum copo registrado`)
   const [htmlHistorico, setHtmlHistorico] = useState("")
 
   let data = new Date();
@@ -43,22 +43,25 @@ function Agua() {
       setTotalCopos(totalCopos+1)
       // setTotalMl(copoMl*(totalCopos+1))
       setTotalMl(parseFloat(totalMl)+parseFloat(copoMl))
-      if(historico == `<h2>Nenhum copo registrado</h2>`) {
-        setHistorico(`<h2>🥤 com ${copoMl}ml bebido em: ${dia} - ${hora}</h2>`)
+      if(historico == `<h2>Histórico de copos</h2><p class="historicoLinha">Nenhum copo registrado`) {
+        setHistorico(`<h2>Histórico de copos</h2><p class="historicoLinha"> 🥤 de ${copoMl}ml adicionado no dia ${dia} às ${hora} </p>`)
       }
       else {
-        setHistorico(historico + `<h2>🥤 com ${copoMl}ml bebido em: ${dia} - ${hora}</h2>`)
+        setHistorico(historico + `<p class="historicoLinha"> 🥤 de ${copoMl}ml adicionado no dia ${dia} às ${hora} </p>`)
       }
     
-      if((parseFloat(totalMl)+parseFloat(copoMl)) >= metaSent) {
+      if((parseFloat(totalMl)+parseFloat(copoMl)) >= metaSent && metaSent != 0) {
         setParabens("Parabéns, você cumpriu sua meta diária!")
+      }
+      else if(metaSent == 0) {
+        setParabens("Sem meta diária")
       }
       else {
         setParabens("")
       }
     }
     else {
-      alert('Valor inválido, o copo só pode ter uma quantidade de ml maior que 0')
+      alert('Valor inválido, a quantidade de ml do copo só pode ser um número maior que 0')
     }
   }
 
@@ -67,7 +70,6 @@ function Agua() {
 
     setTotalCopos(0)
     setTotalMl(0)
-    setCopoMl(0)
   }
 
   const mostrarHistorico = () => {
@@ -75,7 +77,7 @@ function Agua() {
   }
 
   const resetarHistorico = () => {
-    setHistorico(`<h2>Nenhum copo registrado</h2>`)
+    setHistorico(`<h2>Histórico de copos</h2><p class="historicoLinha">Nenhum copo registrado`)
     setHtmlHistorico("")
   }
 
@@ -87,6 +89,16 @@ function Agua() {
     event.preventDefault();
     if(metaInput >= 0) {
       setMetaSent(metaInput);
+
+      if((parseFloat(totalMl)+parseFloat(copoMl)) >= metaInput && metaInput != 0) {
+        setParabens("Parabéns, você cumpriu sua meta diária!")
+      }
+      else if((parseFloat(totalMl)+parseFloat(copoMl)) >= metaInput && metaInput == 0) {
+        setParabens("Sem meta diária")
+      }
+      else {
+        setParabens("")
+      }
     }
     else {
       alert('Sua meta de mls precisa ser um número maior ou igual a 0')
@@ -138,9 +150,9 @@ function Agua() {
       </div>
 
       <div id="botoesHistorico" class="menus">
-        <button class="botao" id="botaoMaior" onClick={mostrarHistorico}>Mostrar ou Atualizar histórico</button>
+        <button class="botao" id="botaoCima" onClick={mostrarHistorico}>Mostrar ou Atualizar histórico</button>
         <button class="botao" onClick={ocultarHistorico}>Ocultar histórico</button>
-        <button class="botao" onClick={resetarHistorico}>Resetar histórico</button>
+        <button class="botao" id="botaoBaixo" onClick={resetarHistorico}>Resetar e ocultar histórico</button>
       </div>
       </div>
 
